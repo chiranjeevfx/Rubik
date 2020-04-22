@@ -156,6 +156,14 @@ class Cube {
         _L();_U();L();
     }
 
+    public void leftTriggerStep4() { // U’ + Left Trigger
+        _U();leftTrigger();
+    }
+
+    public void rightTriggerStep4() { // U + Right Trigger
+        U();rightTrigger();
+    }
+
     public void U() {
         // z = 2;
         Piece tmp = pieces[2][0][0];
@@ -235,6 +243,7 @@ class Cube {
     public void R() {
         _R();_R();_R();
     }
+
 
     public void yellowCrossStep5() {// F U R U’ R’ F’ (yellow cross)
         F();U();R();_U();_R();_F();
