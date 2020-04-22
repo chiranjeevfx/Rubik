@@ -4,8 +4,7 @@ public class RubikCube {
     public static void main(String args[]) {
         System.out.println("Starting...");
         Cube cube = new Cube();
-        cube.cwStep8();cube.cwStep8();
-        cube.cwStep8();
+        cube.rotateCubeLeft();
         cube.printCube();
         //System.out.println("Number of sticker is: " + cube.countSticker());
 //        cube.printFace();

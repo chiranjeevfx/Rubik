@@ -164,6 +164,10 @@ class Cube {
         U();rightTrigger();
     }
 
+    public void rotateCubeLeft() { // rotate the cube in the direction of U
+        U();M();_D();
+    }
+
     public void U() {
         // z = 2;
         Piece tmp = pieces[2][0][0];
@@ -177,6 +181,36 @@ class Cube {
         pieces[2][2][1] = pieces[2][1][2];pieces[2][2][1].U();
         pieces[2][1][2] = pieces[2][0][1];pieces[2][1][2].U();
         pieces[2][0][1] = tmp;pieces[2][0][1].U();
+    }
+
+    public void M() { // rotate middle layer in the same direction as U
+        // z = 1;
+        Piece tmp = pieces[1][0][0];
+        pieces[1][0][0] = pieces[1][2][0];pieces[1][0][0].U();
+        pieces[1][2][0] = pieces[1][2][2];pieces[1][2][0].U();
+        pieces[1][2][2] = pieces[1][0][2];pieces[1][2][2].U();
+        pieces[1][0][2] = tmp;pieces[1][0][2].U();
+
+        tmp = pieces[1][1][0];
+        pieces[1][1][0] = pieces[1][2][1];pieces[1][1][0].U();
+        pieces[1][2][1] = pieces[1][1][2];pieces[1][2][1].U();
+        pieces[1][1][2] = pieces[1][0][1];pieces[1][1][2].U();
+        pieces[1][0][1] = tmp;pieces[1][0][1].U();
+    }
+
+    public void _D() { // rotate lower(down) layer in the same direction as U
+        // z = 0;
+        Piece tmp = pieces[0][0][0];
+        pieces[0][0][0] = pieces[0][2][0];pieces[0][0][0].U();
+        pieces[0][2][0] = pieces[0][2][2];pieces[0][2][0].U();
+        pieces[0][2][2] = pieces[0][0][2];pieces[0][2][2].U();
+        pieces[0][0][2] = tmp;pieces[0][0][2].U();
+
+        tmp = pieces[0][1][0];
+        pieces[0][1][0] = pieces[0][2][1];pieces[0][1][0].U();
+        pieces[0][2][1] = pieces[0][1][2];pieces[0][2][1].U();
+        pieces[0][1][2] = pieces[0][0][1];pieces[0][1][2].U();
+        pieces[0][0][1] = tmp;pieces[0][0][1].U();
     }
 
     public void L() {
