@@ -481,8 +481,27 @@ class Cube {
         }
     }
 
+    /**
+     * Check if middle layer is solved.
+     *
+     * @return
+     */
+    public boolean isSolvedMiddleLayer() {
+        return pieces[1][0][0].F == pieces[1][1][0].F && pieces[1][1][0].F == pieces[1][2][0].F &&
+                pieces[1][0][2].L == pieces[1][0][1].L && pieces[1][0][1].L == pieces[1][0][0].L &&
+                pieces[1][0][2].B == pieces[1][1][2].B && pieces[1][1][2].B == pieces[1][2][2].B &&
+                pieces[1][2][2].R == pieces[1][2][1].R && pieces[1][2][1].R == pieces[1][2][0].R;
+    }
+
+    public void solveMiddleLayer() {
+        while(!isSolvedMiddleLayer()) {
+            // keep solving
+        }
+    }
+
     public void solve() {
-        while (!isCubeSolved()) {
+        int steps = 0;
+        while (!isCubeSolved() && steps++ < 10) {
             // 1. Create Daisy
             makeDaisy();
             // 2. Make white cross
@@ -490,6 +509,8 @@ class Cube {
             // 3. solve bottom layer.
             solveBottomLayer();
             // 4. Solve middle layer.
+            solveMiddleLayer();
+            // 5. yellow cross.
         }
     }
 }
