@@ -389,8 +389,21 @@ class Cube {
         }
     }
 
-    public void solve() {
-        // 1. Create Daisy
+    public boolean isCubeSolved() {
+        return solvedFace() && solvedLeft() && solvedBack() && solvedRight() && solvedUp() && solvedDown();
+    }
 
+    public boolean isDaisy() {
+        Sticker w = Sticker.W;
+        return pieces[2][0][1].F == w && pieces[2][1][2].F == w && pieces[2][2][1].F == w && pieces[2][1][0].F == w;
+    }
+
+    public void solve() {
+        while (!isCubeSolved()) {
+            // 1. Create Daisy
+            while(!isDaisy()) {
+                //
+            }
+        }
     }
 }
