@@ -395,15 +395,62 @@ class Cube {
 
     public boolean isDaisy() {
         Sticker w = Sticker.W;
-        return pieces[2][0][1].F == w && pieces[2][1][2].F == w && pieces[2][2][1].F == w && pieces[2][1][0].F == w;
+        return pieces[2][0][1].U == w && pieces[2][1][2].U == w && pieces[2][2][1].U == w && pieces[2][1][0].U == w;
+    }
+
+    public boolean whiteCross() {
+        Sticker w = Sticker.W;
+        return pieces[0][0][1].D == w && pieces[0][1][2].D == w && pieces[0][2][1].D == w && pieces[0][1][0].D == w;
+    }
+
+    public void makeDaisy() {
+        System.out.println("Making Daisy...");
+        int count=0;
+        while (!isDaisy() && count++ < 100) {
+            //printUp();
+            if (pieces[2][2][1].U == Sticker.W) {
+                U();
+            } else if (pieces[2][2][1].R == Sticker.W) {
+                _R();
+            } else if (pieces[1][2][0].R == Sticker.W) {
+                while (pieces[2][1][0].U == Sticker.W) {
+                    U();
+                }
+                _F();
+            } else if (pieces[1][2][0].F == Sticker.W) {
+                while (pieces[2][2][1].U == Sticker.W) {
+                    U();
+                }
+                R();
+            } else if (pieces[0][2][1].R == Sticker.W || pieces[0][2][1].D == Sticker.W) {
+                while (pieces[2][2][1].U == Sticker.W) {
+                    U();
+                }
+                R();
+            } else {
+                rotateCubeLeft();
+            }
+        }
+        printUp();
+    }
+
+    public void makeWhiteCross() {
+        while (!whiteCross()) {
+            while(pieces[2][1][0].F != pieces[1][1][0].F) {
+                U();
+            }
+            F2();
+            rotateCubeLeft();
+        }
     }
 
     public void solve() {
         while (!isCubeSolved()) {
             // 1. Create Daisy
-            while(!isDaisy()) {
-                //
-            }
+            makeDaisy();
+            // 2. Make white cross
+            makeWhiteCross();
+            // solve bottom layer.
         }
     }
 }
