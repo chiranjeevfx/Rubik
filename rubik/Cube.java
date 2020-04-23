@@ -431,7 +431,7 @@ class Cube {
                 rotateCubeLeft();
             }
         }
-        printUp();
+        //printUp();
     }
 
     public void makeWhiteCross() {
@@ -444,13 +444,52 @@ class Cube {
         }
     }
 
+    public void solveBottomLayer() {
+        int noWorkTry=0;
+        while (!solvedDown() && noWorkTry<100) {
+            if (pieces[2][2][0].R == Sticker.W) {
+                while (pieces[2][2][0].F != pieces[1][1][0].F) {
+                    rotateCubeLeft();
+                    _U();
+                }
+                rightTrigger();
+                noWorkTry=0;
+            } else if (pieces[2][2][0].F == Sticker.W) {
+                U();
+                while (pieces[2][0][0].F != pieces[1][1][0].F) {
+                    rotateCubeLeft();
+                    _U();
+                }
+                leftTrigger();
+                noWorkTry=0;
+            } else if (pieces[2][2][0].U == Sticker.W) {
+                while (pieces[0][2][0].D == Sticker.W && pieces[0][2][0].F == pieces[0][1][0].F) {
+                    rotateCubeLeft();
+                    _U();
+                }
+                rightTrigger();
+                noWorkTry=0;
+            } else {
+                // System.out.println("noWorkTry: " + noWorkTry);
+                // printDown();
+                noWorkTry++;
+                rotateCubeLeft();
+                if(noWorkTry>3) {
+                    rightTrigger();
+                }
+            }
+        }
+    }
+
     public void solve() {
         while (!isCubeSolved()) {
             // 1. Create Daisy
             makeDaisy();
             // 2. Make white cross
             makeWhiteCross();
-            // solve bottom layer.
+            // 3. solve bottom layer.
+            solveBottomLayer();
+            // 4. Solve middle layer.
         }
     }
 }
