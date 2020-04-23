@@ -3,6 +3,8 @@ package rubik;
 class Cube {
     Piece pieces[][][];
 
+    int len =3;
+
     Cube() {
         pieces = new Piece[3][3][3];// z(vertical),x(horizontal),y(face to back)
         // bottom layer
@@ -50,6 +52,20 @@ class Cube {
         }
     }
 
+    public boolean solvedFace() {
+        Sticker prev = Sticker.Z;
+        for (int i = len - 1; i >= 0; i--) {
+            for (int j = 0; j < len; j++) {
+                Sticker curr = pieces[i][j][0].F;
+                if (curr != prev && prev != Sticker.Z) {
+                    return false;
+                }
+                prev = curr;
+            }
+        }
+        return true;
+    }
+
     public void printLeft() { // x==0 is Left.
         System.out.println("Left:");
         int len = 3;
@@ -59,6 +75,20 @@ class Cube {
             }
             System.out.println();
         }
+    }
+
+    public boolean solvedLeft() {
+        Sticker prev = Sticker.Z;
+        for (int i = len - 1; i >= 0; i--) {
+            for (int j = len - 1; j >= 0; j--) {
+                Sticker curr = pieces[i][0][j].L;
+                if (curr != prev && prev != Sticker.Z) {
+                    return false;
+                }
+                prev = curr;
+            }
+        }
+        return true;
     }
 
     public void printBack() { // y==2 is Back.
@@ -72,6 +102,20 @@ class Cube {
         }
     }
 
+    public boolean solvedBack() {
+        Sticker prev = Sticker.Z;
+        for (int i = len - 1; i >= 0; i--) {
+            for (int j = len - 1; j >= 0; j--) {
+                Sticker curr = pieces[i][j][2].B;
+                if (curr != prev && prev != Sticker.Z) {
+                    return false;
+                }
+                prev = curr;
+            }
+        }
+        return true;
+    }
+
     public void printRight() { // x==2 is Right.
         System.out.println("Right:");
         int len = 3;
@@ -81,6 +125,20 @@ class Cube {
             }
             System.out.println();
         }
+    }
+
+    public boolean solvedRight() {
+        Sticker prev = Sticker.Z;
+        for (int i = len - 1; i >= 0; i--) {
+            for (int j = 0; j < len; j++) {
+                Sticker curr = pieces[i][2][j].R;
+                if (curr != prev && prev != Sticker.Z) {
+                    return false;
+                }
+                prev = curr;
+            }
+        }
+        return true;
     }
 
     public void printUp() { // z==2 is Up.
@@ -94,6 +152,20 @@ class Cube {
         }
     }
 
+    public boolean solvedUp() {
+        Sticker prev = Sticker.Z;
+        for (int i = len - 1; i >= 0; i--) {
+            for (int j = 0; j < len; j++) {
+                Sticker curr = pieces[2][j][i].U;
+                if (curr != prev && prev != Sticker.Z) {
+                    return false;
+                }
+                prev = curr;
+            }
+        }
+        return true;
+    }
+
     public void printDown() { // z==0 is Down.
         System.out.println("Down:");
         int len = 3;
@@ -103,6 +175,20 @@ class Cube {
             }
             System.out.println();
         }
+    }
+
+    public boolean solvedDown() {
+        Sticker prev = Sticker.Z;
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < len; j++) {
+                Sticker curr = pieces[0][j][i].D;
+                if (curr != prev && prev != Sticker.Z) {
+                    return false;
+                }
+                prev = curr;
+            }
+        }
+        return true;
     }
 
     public int countSticker() {
@@ -294,5 +380,17 @@ class Cube {
 
     public void cwStep8() {// F2 U R’ L F2 L’ R U F2
         F2();U();_R();L();F2();_L();R();U();F2();
+    }
+
+    public void randomize() {
+        // randomize.
+        for(int i=0;i<10;i++) {
+            leftTrigger();rightTrigger();
+        }
+    }
+
+    public void solve() {
+        // 1. Create Daisy
+
     }
 }
