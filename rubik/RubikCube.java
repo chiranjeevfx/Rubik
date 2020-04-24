@@ -16,6 +16,7 @@ public class RubikCube {
 //        cube.finalStep();
         cube.solve();
         cube.printCube();
+        cube.printStepsTaken();
         //System.out.println("Number of sticker is: " + cube.countSticker());
     }
 

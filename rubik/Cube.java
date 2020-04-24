@@ -2,6 +2,12 @@ package rubik;
 
 class Cube {
     Piece pieces[][][];
+    int fCount=0;
+    int lCount=0;
+    int _rCount=0;
+    int uCount=0;
+    int _dCount=0;
+    int mCount=0;
 
     int len =3;
 
@@ -255,6 +261,7 @@ class Cube {
     }
 
     public void U() {
+        uCount++;
         // z = 2;
         Piece tmp = pieces[2][0][0];
         pieces[2][0][0] = pieces[2][2][0];pieces[2][0][0].U();
@@ -270,6 +277,7 @@ class Cube {
     }
 
     public void M() { // rotate middle layer in the same direction as U
+        mCount++;
         // z = 1;
         Piece tmp = pieces[1][0][0];
         pieces[1][0][0] = pieces[1][2][0];pieces[1][0][0].U();
@@ -285,6 +293,7 @@ class Cube {
     }
 
     public void _D() { // rotate lower(down) layer in the same direction as U
+        _dCount++;
         // z = 0;
         Piece tmp = pieces[0][0][0];
         pieces[0][0][0] = pieces[0][2][0];pieces[0][0][0].U();
@@ -300,6 +309,7 @@ class Cube {
     }
 
     public void L() {
+        lCount++;
         // x = 0;
         Piece tmp = pieces[0][0][0];
         pieces[0][0][0] = pieces[2][0][0];pieces[0][0][0].L();
@@ -323,6 +333,7 @@ class Cube {
     }
 
     public void _R() {
+        _rCount++;
         // x = 2;
         Piece tmp = pieces[0][2][0];
         pieces[0][2][0] = pieces[2][2][0];pieces[0][2][0]._R();
@@ -338,6 +349,7 @@ class Cube {
     }
 
     public void F() {
+        fCount++;
         // y = 0;
         Piece tmp = pieces[0][0][0];
         pieces[0][0][0] = pieces[0][2][0];pieces[0][0][0].F();
@@ -693,5 +705,15 @@ class Cube {
             // 8. final step
             finalStep();
         }
+    }
+
+    public void printStepsTaken() {
+        System.out.println("Below are the number of face turns made: ");
+        System.out.println("fCount: " + fCount);
+        System.out.println("lCount: " + lCount);
+        System.out.println("_rCount: " + _rCount);
+        System.out.println("uCount: " + uCount);
+        System.out.println("_dCount: " + _dCount);
+        System.out.println("mCount: " + mCount);
     }
 }
