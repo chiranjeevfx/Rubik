@@ -627,6 +627,31 @@ class Cube {
         }
     }
 
+    public int numberOfFaceMatchingTopCorner() {
+        int ans = 0;
+        if (pieces[2][0][0].L == pieces[2][0][2].L) ans++;
+        if (pieces[2][0][2].B == pieces[2][2][2].B) ans++;
+        if (pieces[2][2][2].R == pieces[2][2][0].R) ans++;
+        if (pieces[2][0][0].F == pieces[2][2][0].F) ans++;
+        return ans;
+    }
+
+    public void positionTopCorners() {
+        int steps = 0;
+        while (numberOfFaceMatchingTopCorner() < 4 && steps++ < 100) {
+            if (numberOfFaceMatchingTopCorner() == 1) {
+                while (pieces[2][0][0].L != pieces[2][0][2].L) {
+                    U();
+                }
+            }
+            topCornersStep7();
+        }
+        // match corners with corresponding face.
+        while (pieces[2][0][0].L != pieces[1][0][0].L) {
+            U();
+        }
+    }
+
     public void solve() {
         int steps = 0;
         while (!isCubeSolved() && steps++ < 10) {
@@ -642,7 +667,8 @@ class Cube {
             makeYellowCross();
             // 6. Yellow Face
             makeYellowFace();
-
+            // 7. Top corners
+            positionTopCorners();
         }
     }
 }
