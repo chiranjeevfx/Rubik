@@ -652,9 +652,30 @@ class Cube {
         }
     }
 
+    private int numOfFaceSolved() {
+        int ans = 0;
+        ans += (solvedBack() ? 1 : 0);
+        ans += (solvedLeft() ? 1 : 0);
+        ans += (solvedRight() ? 1 : 0);
+        ans += (solvedBack() ? 1 : 0);
+        return ans;
+    }
+
+    public void finalStep() {
+        while (numOfFaceSolved() < 4) {
+            if (numOfFaceSolved() == 1) {
+                while (!solvedBack()) {
+                    rotateCubeLeft();
+                }
+            }
+            cwStep8();
+        }
+    }
+
     public void solve() {
         int steps = 0;
         while (!isCubeSolved() && steps++ < 10) {
+            System.out.println("Try: " + steps);
             // 1. Create Daisy
             makeDaisy();
             // 2. Make white cross
@@ -669,6 +690,8 @@ class Cube {
             makeYellowFace();
             // 7. Top corners
             positionTopCorners();
+            // 8. final step
+            finalStep();
         }
     }
 }
