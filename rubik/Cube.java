@@ -575,6 +575,19 @@ class Cube {
         return yellowEdge;
     }
 
+    public int countYellowCorner() {
+        int yellowCorner = 0;
+        if (pieces[2][0][0].U == Sticker.Y) yellowCorner++;
+        if (pieces[2][0][2].U == Sticker.Y) yellowCorner++;
+        if (pieces[2][2][0].U == Sticker.Y) yellowCorner++;
+        if (pieces[2][2][2].U == Sticker.Y) yellowCorner++;
+        return yellowCorner;
+    }
+
+    public boolean isYellowCornerOnTopLeftUp() {
+        return pieces[2][0][0].U == Sticker.Y;
+    }
+
     public boolean isYellow9and12Pos() {
         return pieces[2][1][2].U == Sticker.Y && pieces[2][0][1].U == Sticker.Y;
     }
@@ -598,6 +611,22 @@ class Cube {
         }
     }
 
+    public void makeYellowFace() {
+        int steps = 0;
+        while (!solvedUp() && steps++ < 100) {
+            if (countYellowCorner() == 1) {
+                while (!isYellowCornerOnTopLeftUp()) {
+                    U();
+                }
+            } else {
+                while (pieces[2][0][0].L != Sticker.Y && steps++ < 100) {
+                    U();
+                }
+            }
+            yellowFaceStep6();
+        }
+    }
+
     public void solve() {
         int steps = 0;
         while (!isCubeSolved() && steps++ < 10) {
@@ -612,6 +641,7 @@ class Cube {
             // 5. yellow cross.
             makeYellowCross();
             // 6. Yellow Face
+            makeYellowFace();
 
         }
     }
