@@ -404,7 +404,7 @@ class Cube {
     }
 
     public void makeDaisy() {
-        System.out.println("Making Daisy...");
+        //System.out.println("Making Daisy...");
         int count=0;
         while (!isDaisy() && count++ < 100) {
             //printUp();
@@ -523,7 +523,7 @@ class Cube {
             }
             int turns = 0;
             while (pieces[2][1][0].F == Sticker.Y || pieces[2][1][0].U == Sticker.Y) {
-                System.out.println("turns: " + turns);
+                //System.out.println("turns: " + turns);
                 U();
                 turns++;
                 if (turns > 4) {
@@ -561,6 +561,43 @@ class Cube {
         }
     }
 
+    public boolean isYellowCross() {
+        return pieces[2][1][0].U == Sticker.Y && pieces[2][1][2].U == Sticker.Y &&
+                pieces[2][0][1].U == Sticker.Y && pieces[2][2][1].U == Sticker.Y;
+    }
+
+    public int countYellowEdge() {
+        int yellowEdge = 0;
+        if (pieces[2][1][0].U == Sticker.Y) yellowEdge++;
+        if (pieces[2][1][2].U == Sticker.Y) yellowEdge++;
+        if (pieces[2][0][1].U == Sticker.Y) yellowEdge++;
+        if (pieces[2][2][1].U == Sticker.Y) yellowEdge++;
+        return yellowEdge;
+    }
+
+    public boolean isYellow9and12Pos() {
+        return pieces[2][1][2].U == Sticker.Y && pieces[2][0][1].U == Sticker.Y;
+    }
+
+    public boolean isYellowLine() {
+        return pieces[2][1][0].U == Sticker.Y && pieces[2][1][2].U == Sticker.Y;
+    }
+
+    public void makeYellowCross() {
+        int steps = 0;
+        while (!isYellowCross() && steps++ < 100) {
+            while (!isYellow9and12Pos() && !isYellowLine() && steps++ < 100) {
+                if (countYellowEdge() < 1) {
+                    yellowCrossStep5();
+                } else {
+                    //printUp();
+                    U();
+                }
+            }
+            yellowCrossStep5();
+        }
+    }
+
     public void solve() {
         int steps = 0;
         while (!isCubeSolved() && steps++ < 10) {
@@ -573,6 +610,9 @@ class Cube {
             // 4. Solve middle layer.
             solveMiddleLayer();
             // 5. yellow cross.
+            makeYellowCross();
+            // 6. Yellow Face
+
         }
     }
 }
