@@ -493,9 +493,71 @@ class Cube {
                 pieces[1][2][2].R == pieces[1][2][1].R && pieces[1][2][1].R == pieces[1][2][0].R;
     }
 
+    public void fixWhitePiece() {
+        if (pieces[2][2][0].R == Sticker.W) {
+            while(pieces[2][2][0].F != pieces[1][1][0].F) {
+                rotateCubeLeft();_U();
+            }
+            U();
+            rightTrigger();
+        } else {
+            if (pieces[2][2][0].F != Sticker.W) {
+                System.out.println(pieces[2][2][0].R + " Exception...Impossible " + pieces[2][2][0].F);
+                printFace();printUp();printRight();
+            }
+            U();// bring it on L from L
+            while(pieces[2][0][0].F != pieces[1][1][0].F) {
+                rotateCubeLeft();_U();
+            }
+            leftTrigger();
+        }
+    }
+
     public void solveMiddleLayer() {
-        while(!isSolvedMiddleLayer()) {
+        int steps = 0;
+        while (!isSolvedMiddleLayer() && steps++ < 1000) {
             // keep solving
+            if (!solvedDown()) {
+                System.out.println("Problem encountered step: " + steps);
+                printDown();
+            }
+            int turns = 0;
+            while (pieces[2][1][0].F == Sticker.Y || pieces[2][1][0].U == Sticker.Y) {
+                System.out.println("turns: " + turns);
+                U();
+                turns++;
+                if (turns > 4) {
+                    turns = 0;
+                    while (pieces[1][2][0].F == pieces[1][1][0].F && pieces[1][2][0].R == pieces[1][2][1].R) {
+                        rotateCubeLeft();
+                    }
+                    rightTrigger();
+                    _U();
+                    solveBottomLayer();
+                }
+            }
+            while (pieces[2][1][0].F != pieces[1][1][0].F) {
+                rotateCubeLeft();
+                _U();
+            }
+            if (pieces[2][1][0].U == pieces[1][2][1].R) {
+                U();
+                rightTrigger();
+                _U();
+            } else {
+                // match left.
+                if (pieces[2][1][0].U != pieces[1][0][1].L) {
+                    System.out.println("Exception occurred");
+                }
+                _U();
+                leftTrigger();
+            }
+            if (pieces[2][2][0].F == Sticker.W || pieces[2][2][0].R == Sticker.W) {
+                solveBottomLayer();
+            } else {
+                System.out.println("Exception occurred, TopRightFace...U:" + pieces[2][2][0].U + " F:" + pieces[2][2][0].F + ",R:" + pieces[2][2][0].R);
+            }
+            rotateCubeLeft();
         }
     }
 
